@@ -2,7 +2,10 @@ import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
   await page.goto('https://www.automationexercise.com/');
-  await page.getByRole('button', { name: 'Zgadzam się' }).click();
+  const consentButton = page.getByRole('button', { name: 'Zgadzam się' });
+  if (await consentButton.isVisible().catch(() => false)) {
+    await consentButton.click();
+  }
   await page.getByRole('link', { name: ' Signup / Login' }).click();
   await page.getByRole('textbox', { name: 'Name' }).fill('TestLogin');
   await page.getByRole('textbox', { name: 'Name' }).press('Tab');
