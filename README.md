@@ -3,6 +3,3 @@ My take on a maintainable end-to-end test suite using Playwright and the Page Ob
 
 
 
-### tab readme-pl
-
-s
