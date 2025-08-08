@@ -2,7 +2,15 @@ import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
   await page.goto('https://www.automationexercise.com/');
-  await page.getByRole('button', { name: 'Zgadzam się' }).click();
+  // Handle Polish or English consent dialogs if present
+  // DODAĆ TAKŻE OBSŁUGĘ INNYCH JĘZYKÓW, najlepiej wszystkich po DOM i zrobic z tego modul bo bede tego raczej uzywal w roznych testach
+  const consentButtonPl = page.getByRole('button', { name: 'Zgadzam się' });
+  const consentButtonEn = page.getByRole('button', { name: 'Consent' });
+  if (await consentButtonPl.isVisible()) {
+    await consentButtonPl.click();
+  } else if (await consentButtonEn.isVisible()) {
+    await consentButtonEn.click();
+  }
   await page.getByRole('heading', { name: 'AutomationExercise' }).click();
   await page.getByRole('link', { name: 'Website for automation' }).click();
   await page.getByRole('link', { name: ' Signup / Login' }).click();
